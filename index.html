@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>There is a way to do it: Course Portfolio</title>
+<style>
+:root{--bg:#04070a;--grid:rgba(110,170,180,.13);--ink:#e8eef2;--dim:#7d8890;--edge:#3b444b;--green:#2fd07f;--red:#f0463c;--blue:#3da5f0;--mono:ui-monospace,"SF Mono",Menlo,Consolas,"Courier New",monospace;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:600 13px/1.55 var(--mono);letter-spacing:.08em;text-transform:uppercase;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:56px 56px}
+.top{display:flex;justify-content:space-between;gap:12px;padding:16px 22px;background:#000;color:#6f7a82}
+.top b{color:var(--green)}
+main{max-width:1000px;margin:0 auto;padding:26px 18px 60px}
+h1{font:700 clamp(1.6rem,5vw,2.6rem)/1.1 var(--mono);margin:6px 0 8px;letter-spacing:.06em}
+.lede{max-width:70ch;margin:0 0 22px;color:var(--dim);text-transform:none;letter-spacing:.02em;font-weight:500;font-size:14px}
+.opts{display:flex;flex-wrap:wrap;gap:16px 22px;margin-bottom:16px;align-items:flex-end}
+.grp small{display:block;color:var(--dim);font-size:11px;margin-bottom:6px}
+.tg{display:flex;gap:8px;flex-wrap:wrap}
+button,select{font:inherit;letter-spacing:inherit;text-transform:inherit;color:var(--dim);background:rgba(4,7,10,.85);border:2px solid var(--edge);border-radius:12px;padding:8px 14px;cursor:pointer}
+button[aria-pressed="true"]{color:var(--green);border-color:var(--green);box-shadow:0 0 14px rgba(47,208,127,.25)}
+select{color:var(--ink);padding:9px 10px}
+.go{color:var(--blue);border-color:var(--blue);margin-left:auto;padding:10px 26px}
+.go:hover{box-shadow:0 0 16px rgba(61,165,240,.35)}
+button:focus-visible,select:focus-visible,canvas:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.stage{position:relative;border:2px solid var(--edge);border-radius:14px;overflow:hidden;background:#03060a;touch-action:none}
+.stage::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px)}
+canvas{display:block;width:100%;touch-action:none}
+.hud{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:10px 2px 0;color:var(--dim)}
+.hud b{color:var(--ink);font-variant-numeric:tabular-nums}
+.per{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:20px 0}
+.per div{border:2px solid #4a545b;border-radius:12px;text-align:center;padding:10px 2px;color:#cfd6db;font-variant-numeric:tabular-nums}
+.per span{display:block;color:var(--dim)}
+.per .ok{border-color:var(--green);color:var(--green)}.per .mid{border-color:var(--blue);color:var(--blue)}.per .bad{border-color:var(--red);color:var(--red)}
+.row{display:grid;grid-template-columns:3fr 1.3fr;gap:18px}
+.box{border:2px solid;border-radius:18px;padding:22px 14px;text-align:center}
+.box strong{display:block;font-size:clamp(1.8rem,7vw,3.4rem);line-height:1.1;font-variant-numeric:tabular-nums}
+.box span{display:block;color:var(--ink);margin-top:8px}
+.g{border-color:var(--green);color:var(--green);background:rgba(47,208,127,.05)}
+.r{border-color:var(--red);color:var(--red);background:rgba(240,70,60,.06)}
+.facts{margin:16px 2px 0;color:var(--dim)}
+.arrow{display:flex;align-items:center;gap:14px;margin-top:20px;color:var(--blue);flex-wrap:wrap}
+.para{max-width:72ch;margin:12px 0 0;color:#b9c3ca;text-transform:none;letter-spacing:.02em;font-weight:500;font-size:14px}
+.bests{margin-top:24px;color:var(--dim)}.bests b{color:var(--ink)}
+details{margin-top:16px;color:var(--dim);text-transform:none;letter-spacing:.02em;font-weight:500;max-width:74ch}
+summary{cursor:pointer;color:var(--ink);text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+@media(max-width:600px){.row{grid-template-columns:1fr}.go{margin-left:0}}
+.top{flex-wrap:wrap}.top nav{display:flex;flex-wrap:wrap;gap:4px 18px}.top a{color:#8a959d;text-decoration:none}.top a:hover,.top a:focus-visible{color:var(--green)}
+.mod{margin-top:72px;padding-top:26px;border-top:2px solid var(--edge)}
+.mod>small{display:block;color:var(--green);font-size:12px}
+.mod h2{font:700 clamp(1.4rem,4vw,2rem)/1.15 var(--mono);margin:6px 0 18px;letter-spacing:.06em}
+.mod h3{font:700 14px/1.3 var(--mono);color:var(--blue);margin:30px 0 10px}
+.mod p{font:400 15.5px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:0;text-transform:none;color:#cdd6dc;max-width:72ch;margin:0 0 12px}
+.mod p b{color:var(--ink);font-weight:700}
+.mod a{color:var(--blue);overflow-wrap:anywhere}
+.trace{border:2px solid var(--green);border-radius:14px;padding:14px 18px;background:rgba(47,208,127,.05);max-width:72ch}
+.trace small{display:block;color:var(--green);font-size:11px;margin-bottom:4px}
+.trace p{margin:0;color:var(--ink)}
+.model{border:2px solid var(--blue);border-radius:16px;padding:18px 20px;max-width:72ch;background:rgba(61,165,240,.05)}
+.model p{margin:0}
+.wrap{overflow-x:auto}
+.tbl{width:100%;min-width:620px;border-collapse:separate;border-spacing:0;border:2px solid var(--edge);border-radius:14px}
+.tbl th,.tbl td{border:1px solid var(--edge);padding:12px 10px;text-align:left;font-size:12px;vertical-align:top}
+.tbl th{color:var(--dim)}.tbl td{height:64px}.tbl td:first-child{color:var(--ink)}
+.gap{height:58px}
+footer{margin-top:72px;color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="top"><span id="tl">FN01 / SIN(X) / 5 PERIODS</span><nav aria-label="Sections"><a href="#game" data-go="game">The trace</a><a href="#module-1" data-go="module-1">M1</a><a href="#module-2" data-go="module-2">M2</a><a href="#module-3" data-go="module-3">M3</a><a href="#module-4" data-go="module-4">M4</a></nav></div>
+<main>
+<h1>There is a way to do it. You gotta trace it.</h1>
+<p class="lede">I think of a goal as a shape that is already drawn. My part is to trace it without lifting the pencil, and however far or fast I am, I can inch straight toward it or slow down for the fine details. This portfolio follows that idea, and the game below lets you try it before you read.</p>
+<span id="game"></span>
+<p class="lede">A function slides left and you write on it while it moves. Choose where the pencil lives and whether it writes all the time or only while you hold the click, because holding the click is the whole point.</p>
+
+<section class="opts" aria-label="Game settings">
+  <div class="grp"><small>Function</small><div class="tg" data-g="mode"><button data-v="sin" aria-pressed="true">sin(x)</button><button data-v="cos" aria-pressed="false">cos(x)</button><button data-v="step" aria-pressed="false">-_-_</button></div></div>
+  <div class="grp"><small>Pencil</small><div class="tg" data-g="pencil"><button data-v="fixed" aria-pressed="true">Fixed</button><button data-v="mouse" aria-pressed="false">Mouse</button></div></div>
+  <div class="grp"><small>Ink</small><div class="tg" data-g="ink"><button data-v="on" aria-pressed="true">Always on</button><button data-v="hold" aria-pressed="false">Hold to write</button></div></div>
+  <div class="grp"><small>Speed</small><select id="spd" aria-label="Speed"><option value="0.35">Slow</option><option value="0.5" selected>Medium</option><option value="0.75">Fast</option></select></div>
+  <button class="go" id="go">Start</button>
+</section>
+
+<div class="stage"><canvas id="cv" tabindex="0" aria-label="Game area. Move the pointer, or use the arrow keys, to move the pencil. Hold space or the mouse button to write in hold mode."></canvas></div>
+<div class="hud"><span>Live accuracy <b id="live">–</b></span><span>Pen <b id="pen">–</b></span><span id="hint">Press start</span></div>
+
+<div class="per" id="per"></div>
+
+<section id="result" hidden aria-live="polite">
+  <div class="row">
+    <div class="box g"><strong id="acc"></strong><span>Followed the shape</span></div>
+    <div class="box r"><strong id="missed"></strong><span>Missed or no ink</span></div>
+  </div>
+  <p class="facts" id="facts"></p>
+  <div class="arrow"><svg width="140" height="14" aria-hidden="true"><line x1="0" y1="7" x2="122" y2="7" stroke="currentColor" stroke-width="3"/><polygon points="140,7 120,0 120,14" fill="currentColor"/></svg><span id="alabel"></span></div>
+  <p class="para" id="reflect"></p>
+</section>
+
+<p class="bests">Best this session: sin(x) <b id="b-sin">–</b> / cos(x) <b id="b-cos">–</b> / -_-_ <b id="b-step">–</b></p>
+<details><summary>How accuracy is scored</summary>
+<p>The curve is split into thin columns. For each column, the height of your ink is compared with the function’s height there. A column with no ink counts as a full miss, so lifting the pencil costs you. Accuracy is 100% minus the average miss, measured against half the wave height; sitting still in the middle scores 0%. “Missed” is the share of columns with no ink or more than 15% of the wave height off. In -_-_ mode, a short grace window surrounds each jump.</p></details>
+
+<section class="mod" id="module-1"><small>Module 1</small><h2>The whole, not the parts</h2>
+<div class="trace"><small>Trace note</small><p>The way is already there, I just have to trace it without lifting the pencil. A discrete pencil can’t pinpoint a point exactly, a continuous one can at least cross it. The world may be discrete at the smallest scale, but practically it is continuous, so even a very specific task needs a continuous view or it breaks the moment things change.</p></div>
+<h3>Activity 1-1</h3>
+<p>Stories about “aswangs” are the first thing that comes to my mind. In the provinces they make the dark feel alive even though it is naturally quiet; a sound in the trees or an animal that “shouldn’t be there” turns an empty night into something that watches back. Others fit in too, like the bakunawa (the dragon said to swallow the moon, which people scared away with noise during eclipses) and the habit of saying “tabi-tabi po” when passing big trees or old places in case something unseen lives there.</p>
+<p><b>Do they describe the environment, the community, or the deities?</b> All three, and they are mixed together. The environment is the dark, forest, sea and the sky. The community shows up in the rules the stories carry, like staying in at night and looking after the weak or the sick. The deities and spirits (anito, diwata) are the ones who “own” those places.</p>
+<p>I think it tells us that humans were never placed above the world around them. We are one part of it, and we have to ask permission, follow conditions and expect consequences. It is already a systems view: you act, the environment responds, and that response feeds back into how you live.</p>
+<h3>Activity 1-2</h3>
+<p><b>Situation:</b> my own routine as a distance education student, which makes more sense as a whole than just as a list of study tips.</p>
+<p><b>Description:</b> every week there are readings, activities and deadlines, but how well I do them rarely depends on just one of those things.</p>
+<p><b>Parts and connections:</b> my place/s of study, familiarity with the interface, the time I set aside, my energy &amp; rest, commitment to the task, and the free time I keep for money-making and recreation. They depend on each other. A bad study place drains energy and low energy slows the task; a slower task eats the free time, and less free time lowers my drive for the next task. It is a loop that can run in a good direction or a bad one.</p>
+<p><b>What I understand differently:</b> part by part, the answer always looks like “just study harder.” As a whole, I can see that one small adjustment, like fixing the place or the pacing, shifts the entire loop. The parts matter less than the connections between them. It is also never a single fixed point; it is something I keep adjusting continuously, so I don’t break when conditions change.</p>
+<p><b>Woese’s “New Biology”:</b> My understanding is that it moves away from taking life apart piece by piece and toward seeing it as an interconnected whole. That deepens how I see my routine. I stop treating myself like a machine with separate switches and start treating myself like a living system that feeds back, adapts and optimizes. It also made me think of the world as practically continuous, even if the smallest scale is discrete. I can have a very specific goal and still keep a flexible view of the path to it.</p></section>
+
+<section class="mod" id="module-2"><small>Module 2</small><h2>Systems that loop</h2>
+<div class="trace"><small>Trace note</small><p>Life is not one fixed route. It is a loop that senses the gap, adjusts and runs again, like back-propagation: the parts (cells, proteins) are discrete, but the way they move a problem toward its solution is continuous.</p></div>
+<h3>Activity 2-1</h3>
+<p>Living systems I see around me are my own body (heart, nerves, digestion), my family and household, plants and animals, and the community as a whole. Non-living ones are the water and electricity lines at home, the internet and the learning platform I use. The non-living ones usually have people inside them, so they end up as a “mix”.</p>
+<p>Living systems are sustained by constant energy input (the sun to plants to food), by water and matter that keep getting recycled, and by feedback loops that correct themselves, like hunger or body temperature. I also think of it through entropy. The universe naturally drifts toward disorder, and life holds that off locally only as long as energy keeps coming in. When the energy stops, the system falls apart.</p>
+<p>To come and think of it, matter is a hyper-localized anomaly in the universe, and “life systems” are hyper-localized anomaly in matter. It is stable towards entropy and the natural de-resolution of the universe as there is energy, the sun, water and everything finely tuned and optimized for this framework we call life.</p>
+<h3>Activity 2-2</h3>
+<p><b>Types of systems:</b> the circulatory, nervous and digestive systems; the family system and the friendship system; the shower and the house’s water system; the traffic system (with a social system added to it); and the school of fish, the fishery and the nation’s fishery.</p>
+<p><b>Living vs non-living:</b> living are the body systems, the family and friendship, and the school of fish. Non-living are the water tank/heater/pipes and the highway. Cynthia in the shower and the drivers in traffic are living parts inside non-living systems.</p>
+<p><b>Why living systems are important:</b> they hold things in balance through feedback, they keep life going through flows like equilibrium and disequilibrium, and they let us see consequences before they happen. Something can loop a concept, and the looped concept can loop its loop. The fishery shows what happens when we don’t see them, because the system was set up to deplete itself.</p>
+<h3>Model</h3>
+<div class="model"><p><b>A school of fish (living system).</b> Elements: the stock of fish, inflow (reproduction), outflow (fishing, predators, natural death), and the people setting fishing rules. Interconnections: more fishing lowers the stock, a lower stock means less reproduction; the rules should act as a balancing loop that pulls fishing back, but imperfect information and short-term profit make them fall short. Purpose: keep inflow and outflow matched so the population stays stable for the long term. If outflow keeps beating inflow, the system depletes itself. The goal is held by constant feedback &amp; adjustment, not by a fixed rule.</p></div></section>
+
+<section class="mod" id="module-3"><small>Module 3</small><h2>Energy and cycles</h2>
+<div class="trace"><small>Trace note</small><p>Energy that spreads out in every direction can’t do work in one direction, so less is left to trace upward at each level. Water is the default carrier here: it fits any space, and ice is less dense than water, which shielded living things during the ice age.</p></div>
+<p style="margin-top:18px">Renewable energy sources are solar, wind, hydro, geothermal and biomass. Non-renewable ones are coal, oil, natural gas and uranium.</p>
+<h3>Activity 3-1</h3>
+<p><b>Why does available energy decrease at higher trophic levels?</b> Because energy is lost every time it moves up a level. Producers use a big part of what they capture for their own respiration and growth, a lot leaves as heat, and some goes to decomposers, so only a small amount reaches the primary consumers, and the same loss repeats at each step. In the Silver Springs example it falls from over 20,000 kcal/m²/year in producers to only 1 in tertiary consumers. I tie it to entropy: the energy isn’t destroyed, it scatters in random directions as heat, and scattered energy can’t do useful “work” for the next organism. That is also why food chains stay short, since eventually there isn’t enough left to support a population.</p>
+<p><b>How do food chains and food webs help?</b> A food chain shows one line of who eats whom and how energy moves up, while a food web shows the many crossing feeding connections, so we can see that organisms depend on several others and that energy takes many paths, including through decomposers.</p>
+<p><b>If primary consumers suddenly decrease:</b> the producers would be eaten less and grow for a while, but the secondary consumers lose their main energy source, so they would decline or switch to other prey. Less energy would then pass up to the tertiary and apex consumers, so the effect travels upward through the levels. A food web cushions this because many consumers feed on more than one level, but if the drop is big enough the ecosystem can lose its resilience.</p>
+<h3>Activity 3-2</h3>
+<div class="wrap"><table class="tbl"><thead><tr><th>Element</th><th>Biological importance</th><th>Biologically available forms</th><th>Key processes</th><th>Reservoir</th></tr></thead><tbody>
+<tr><td>Water (Hydrogen &amp; Oxygen)</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>Carbon</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>Nitrogen</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>Phosphorus</td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+<h3>Activity 3-3</h3>
+<p><b>Link:</b> <a href="https://geo.libretexts.org/Bookshelves/Geography_(Physical)/BioGeoChemistry_(LibreTexts)/06%3A_Biogeochemical_Cycling_on_Land/6.07%3A_Human_impacts_on_terrestrial_biogeochemistry/6.7.02%3A_Human-Induced_Changes" target="_blank" rel="noopener">LibreTexts: Human-Induced Changes</a></p>
+<p><b>Insights:</b> Humans have raised atmospheric carbon dioxide by roughly 40% over pre-industrial levels and more than doubled the nitrogen available to ecosystems, mostly through burning fossil fuels, clearing land and making fertilizer. Deforestation also removes carbon sinks, which leaves even more carbon dioxide in the air. The cycles are connected. One change spreads into the rest, and that is what makes living systems more vulnerable. Warming and extra nutrients push ecosystems past their resistance (the ability to stay at equilibrium) and can wear down their resilience (how fast they recover). Excess nitrogen &amp; phosphorus running into water, for example, causes algae blooms and “dead zones,” so even a system that looked stable can tip.</p>
+<p>To put it simply, based on the material that I read, it can be managed, but not with one fixed rule because the system keeps moving. We need balancing feedback: like cutting fossil fuel use and shifting to renewable energy, protecting and restoring forests and wetlands, and using fertilizer only as much as crops need. It also has to be adjusted continuously as we get new information. An unorthodox mini-“fix” can also be things that we fail to see. For example the “lagyan ng takip ang basurahan para hindi umapaw ang basura” might seem peculiar but considering a plane of 8 billion people to be simultaneously have a “critical-thinking-initiative” like that will bring synchronized notions of feasibility.</p></section>
+
+<section class="mod" id="module-4"><small>Module 4</small><h2>Cells and life cycles</h2>
+<div class="trace"><small>Trace note</small><p>Draw mitosis as a line graph: one point splits into two, and each holds the whole of the first. Life keeps doing that, and passing on who you are is how it keeps tracing itself.</p></div>
+<h3>Activity 4-1</h3>
+<p>What I noticed is that every role either starts or ends a system, like a cell dividing, a cell dying, or an organism being born. That makes a life cycle less like a straight line from start to finish and more like a graph that keeps splitting and looping back. Nothing stays static; even something stable is constantly being adjusted.</p>
+<h3>Self-assessment</h3>
+<p><b>Stages of the cell cycle.</b> There are two big parts: interphase and the M phase. Interphase has G1 (the cell grows and does its normal job), S (DNA is replicated, so every chromosome now has two sister chromatids) and G2 (more growth, checking the copied DNA, preparing to divide). The M phase is mitosis, the nucleus dividing, followed by cytokinesis, the cytoplasm splitting.</p>
+<p><b>Why is interphase not a stage of mitosis?</b> Because nothing is dividing yet. It is the preparation period in between divisions, where the cell grows and copies its DNA while the chromosomes are still loose. Mitosis is only the actual splitting of the nucleus.</p>
+<p><b>Phases of mitosis:</b> In prophase the chromosomes condense and the spindle forms. In prometaphase the nuclear envelope breaks down and spindle fibers attach to the chromosomes. In metaphase the chromosomes line up in the middle. In anaphase the sister chromatids are pulled apart toward opposite poles. In telophase the nuclei re-form and the chromosomes loosen again, and cytokinesis finishes the job. The chromosome number is maintained because DNA is copied once and divided once, so each daughter cell gets one chromatid from every chromosome and ends up identical to the parent cell. It is the same as one point splitting into two points, and each of those holds the full original.</p>
+<p><b>Stages of meiosis:</b> Meiosis has one DNA replication but two divisions. In meiosis I, prophase I has homologous chromosomes pairing up and crossing over, metaphase I has the pairs lining up, anaphase I separates the homologs (not the sister chromatids), and telophase I leaves two cells. In meiosis II, the same stages (prophase II to telophase II) separate the sister chromatids, giving four haploid cells in total. Variation comes from crossing over and from independent assortment, which is how the pairs line up randomly in metaphase I.</p>
+<p><b>Why aren’t you an exact replica of your sibling?</b> Each gamete from the same parents carries a different mix because of crossing over and independent assortment, and which sperm meets which egg is also random. The same parents can produce a huge number of combinations, and I think that is how life “passes on” who we are without freezing it.</p>
+<p><b>Why does meiosis II behave like mitosis?</b> Because in both, the sister chromatids line up and then get pulled apart, with no DNA replication right before. The only difference is that the cells in meiosis II are already haploid.</p></section>
+
+<footer>FN01 / There is a way to do it. You gotta trace it. <a href="#game" data-go="game" style="color:var(--green)">Back to the game</a></footer>
+</main>
+
+<script>
+const $=id=>document.getElementById(id),clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const cv=$("cv"),ctx=cv.getContext("2d");
+const C={bg:"#03060a",grid:"rgba(110,170,180,.14)",ink:"#e8eef2",dim:"#7d8890",green:"#2fd07f",red:"#f0463c",blue:"#3da5f0"};
+const FONT='ui-monospace,"SF Mono",Menlo,Consolas,"Courier New",monospace';
+const cfg={mode:"sin",pencil:"fixed",ink:"on"};
+const names={sin:"SIN(X)",cos:"COS(X)",step:"-_-_"};
+let W,H,P,A,cy,lam,L,seg,NB,spd=.5,state="idle",s=0,cd=3,px,py,tx,ty,last=0,raf=0,down=false,bins=[],strokes=[],cur=null,prev=null,donePer=0;
+const best={sin:null,cos:null,step:null};
+
+function f(w){const k=2*Math.PI*w/lam;return cfg.mode==="sin"?A*Math.sin(k):cfg.mode==="cos"?A*Math.cos(k):(Math.floor(w/seg)%2===0?A:-A);}
+function err(w,v){
+  if(cfg.mode==="step"){const m=w%seg,d=Math.min(m,seg-m);if(w>1&&d<lam*.06)return Math.min(Math.abs(v-A),Math.abs(v+A));}
+  return Math.abs(v-f(w));
+}
+const binErr=i=>bins[i]==null?A:err((i+.5)*2,cy-bins[i]);
+const accOf=m=>Math.max(0,1-m/(.5*A))*100;
+function range(w0,w1){const a=Math.floor(w0/2),b=Math.min(NB,Math.ceil(w1/2));let t=0,n=0;for(let i=a;i<b;i++){t+=binErr(i);n++;}return n?t/n:A;}
+
+function resize(){
+  const r=cv.parentElement.getBoundingClientRect();
+  W=r.width;H=Math.round(clamp(W*.5,300,460));
+  const d=window.devicePixelRatio||1;cv.width=W*d;cv.height=H*d;cv.style.height=H+"px";ctx.setTransform(d,0,0,d,0,0);
+  P=Math.round(W*.2);A=H*.28;cy=H/2;lam=W*.4;seg=lam/2;L=lam*5;NB=Math.ceil(L/2);
+  reset();
+}
+function buildPer(){$("per").innerHTML=[1,2,3,4,5].map(i=>`<div id="p${i}">P${i}<span>—</span></div>`).join("");}
+function reset(){
+  cancelAnimationFrame(raf);state="idle";s=0;bins=new Array(NB).fill(null);strokes=[];cur=prev=null;donePer=0;down=false;
+  px=tx=P;py=ty=cy-f(0);
+  $("result").hidden=true;$("go").textContent="Start";$("live").textContent="–";$("pen").textContent="–";$("hint").textContent="Press start";
+  $("tl").textContent="FN01 / "+names[cfg.mode]+" / 5 PERIODS";buildPer();cv.style.cursor="crosshair";draw();
+}
+function start(){
+  cancelAnimationFrame(raf);const m=cfg.mode;reset();state="count";cd=3;$("go").textContent="Restart";
+  $("hint").textContent="Get ready";last=performance.now();raf=requestAnimationFrame(loop);cv.focus({preventScroll:true});
+  cv.style.cursor=cfg.pencil==="mouse"?"none":"ns-resize";
+}
+const inkOn=()=>cfg.ink==="on"||down;
+function fill(w0,y0,w1,y1){
+  let a=Math.floor(w0/2),b=Math.floor(w1/2);
+  if(a>b){[a,b]=[b,a];[y0,y1]=[y1,y0];}
+  for(let i=Math.max(0,a);i<=Math.min(NB-1,b);i++){bins[i]=y0+(y1-y0)*(b===a?1:(i-a)/(b-a));}
+}
+function loop(t){
+  const dt=Math.min(.05,(t-last)/1000);last=t;
+  if(state==="count"){cd-=dt;if(cd<=0){state="run";$("hint").textContent=cfg.ink==="hold"?"Hold the click and follow the change":"Keep the pencil on the curve";}}
+  else if(state==="run"){
+    s+=spd*lam*dt;
+    if(cfg.pencil==="mouse"){px=tx;py=ty;}else{px=P;py+=(ty-py)*Math.min(1,dt*28);}
+    const w=clamp(s+(px-P),0,L);
+    if(inkOn()){
+      if(!cur){cur=[];strokes.push(cur);}
+      cur.push({w,y:py});
+      if(prev)fill(prev.w,prev.y,w,py);else fill(w,py,w,py);
+      prev={w,y:py};
+    }else{cur=null;prev=null;}
+    const nowP=Math.floor(Math.min(s,L-1)/lam);
+    while(donePer<nowP)setPer(donePer++);
+    $("live").textContent=s>2?Math.round(accOf(range(0,Math.min(s,L))))+"%":"–";
+    $("pen").textContent=inkOn()?"DOWN":"UP";
+    if(s>=L){finish();return;}
+  }
+  draw();raf=requestAnimationFrame(loop);
+}
+function setPer(i){
+  const a=accOf(range(i*lam,(i+1)*lam)),el=$("p"+(i+1));
+  el.className=a>=75?"ok":a>=50?"mid":"bad";el.lastChild.textContent=Math.round(a)+"%";
+}
+function finish(){
+  state="done";cancelAnimationFrame(raf);cv.style.cursor="crosshair";
+  for(let i=0;i<5;i++)setPer(i);
+  let tot=0,ok=0,cov=0;
+  for(let i=0;i<NB;i++){const e=binErr(i);tot+=e;if(e<=.15*A)ok++;if(bins[i]!=null)cov++;}
+  const mean=tot/NB,acc=accOf(mean);
+  if(best[cfg.mode]===null||acc>best[cfg.mode])best[cfg.mode]=acc;
+  $("acc").textContent=acc.toFixed(1)+"%";
+  $("missed").textContent=(100-ok/NB*100).toFixed(0)+"%";
+  $("facts").textContent=`INK COVERAGE ${(cov/NB*100).toFixed(0)}% / AVERAGE MISS ${(mean/A*100).toFixed(0)}% OF HEIGHT / ${names[cfg.mode]} / ${cfg.pencil==="fixed"?"FIXED":"MOUSE"} PENCIL / ${cfg.ink==="on"?"ALWAYS ON":"HOLD TO WRITE"}`;
+  if(cfg.ink==="hold"){
+    $("alabel").textContent="Keep the click down → look at the change";
+    $("reflect").textContent="Holding the click is the continuous way to play: one unbroken stroke that you steer as the shape changes. Tapping point by point asks you to be exact at every single instant, which wears you out without ever looking at how the curve is moving, and that is rarely how a task plays out.";
+  }else if(cfg.mode==="step"){
+    $("alabel").textContent="Discrete world → stay locally continuous";
+    $("reflect").textContent="This function jumps, but a pencil can’t. To follow it you had to move smoothly and aim for the next step before it arrived.";
+  }else{
+    $("alabel").textContent="Never lift the pencil → one small correction at a time";
+    $("reflect").textContent="A continuous function can be drawn without lifting the pencil. Every point flows into the next, so a small, steady correction was always enough.";
+  }
+  $("result").hidden=false;$("go").textContent="Run again";$("hint").textContent="Change an option to compare";
+  ["sin","cos","step"].forEach(k=>$("b-"+k).textContent=best[k]===null?"–":best[k].toFixed(1)+"%");
+  draw();$("result").scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+
+function plot(mx,w0,w1,color,lw,al){
+  ctx.save();ctx.strokeStyle=color;ctx.lineWidth=lw;ctx.lineCap="round";ctx.lineJoin="round";ctx.globalAlpha=al||1;ctx.shadowColor=color;ctx.shadowBlur=8;ctx.beginPath();
+  if(cfg.mode==="step"){
+    for(let i=Math.floor(w0/seg);i*seg<w1;i++){const a=Math.max(i*seg,w0),b=Math.min((i+1)*seg,w1),y=cy-(i%2===0?A:-A);ctx.moveTo(mx(a)+5,y);ctx.lineTo(mx(b)-5,y);}
+  }else{
+    const dw=2/Math.abs(mx(1)-mx(0));let first=true;
+    for(let w=w0;w<=w1+dw;w+=dw){const ww=Math.min(w,w1),x=mx(ww),y=cy-f(ww);if(first){ctx.moveTo(x,y);first=false}else ctx.lineTo(x,y);}
+  }
+  ctx.stroke();ctx.restore();
+}
+function bg(off){
+  ctx.fillStyle=C.bg;ctx.fillRect(0,0,W,H);const g=28;
+  ctx.strokeStyle=C.grid;ctx.lineWidth=1;ctx.beginPath();
+  for(let x=-(((off%g)+g)%g);x<W;x+=g){ctx.moveTo(x+.5,0);ctx.lineTo(x+.5,H);}
+  for(let y=cy%g;y<H;y+=g){ctx.moveTo(0,y+.5);ctx.lineTo(W,y+.5);}
+  ctx.stroke();ctx.strokeStyle="rgba(150,190,200,.35)";ctx.beginPath();ctx.moveTo(0,cy+.5);ctx.lineTo(W,cy+.5);ctx.stroke();
+}
+function pencil(x,y,on){
+  ctx.save();ctx.translate(x,y);ctx.rotate(-Math.PI/4);
+  ctx.fillStyle="#f5b800";ctx.fillRect(16,-6,38,12);ctx.fillStyle="#e68a9a";ctx.fillRect(54,-6,10,12);
+  ctx.fillStyle="#e8c9a0";ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(16,-6);ctx.lineTo(16,6);ctx.closePath();ctx.fill();
+  ctx.fillStyle="#222";ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(6,-2.3);ctx.lineTo(6,2.3);ctx.closePath();ctx.fill();ctx.restore();
+  ctx.beginPath();ctx.arc(x,y,on?4:5,0,7);if(on){ctx.fillStyle=C.green;ctx.fill();}else{ctx.strokeStyle=C.dim;ctx.lineWidth=2;ctx.stroke();}
+}
+function finishLine(x){
+  if(x>W+10)return;
+  for(let i=0;i*10<H;i++){ctx.fillStyle=C.ink;ctx.fillRect(x-5+(i%2)*5,i*10,5,10);}
+  ctx.fillStyle=C.ink;ctx.font="700 12px "+FONT;const r=x+90>=W;ctx.textAlign=r?"right":"left";ctx.fillText("FINISH",x+(r?-12:12),20);
+}
+function note(t,sub){
+  ctx.textAlign="center";ctx.fillStyle=C.ink;ctx.font="700 "+(sub?20:64)+"px "+FONT;ctx.fillText(t,W*.6,sub?H*.2:H*.56);
+  if(sub){ctx.fillStyle=C.dim;ctx.font="600 12px "+FONT;ctx.fillText(sub,W*.6,H*.2+24);}
+}
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  if(state==="done"){drawDone();return;}
+  bg(-s);
+  const mx=w=>P+(w-s);
+  if(cfg.pencil==="fixed"){ctx.strokeStyle="rgba(232,238,242,.35)";ctx.setLineDash([5,6]);ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(P+.5,0);ctx.lineTo(P+.5,H);ctx.stroke();ctx.setLineDash([]);}
+  if(s>0)plot(mx,Math.max(0,s-P),s,C.blue,3,.3);
+  plot(mx,s,Math.min(L,s+W-P+10),C.blue,4);
+  ctx.save();ctx.strokeStyle=C.green;ctx.lineWidth=3.5;ctx.lineJoin="round";ctx.lineCap="round";ctx.shadowColor=C.green;ctx.shadowBlur=8;
+  for(const st of strokes){ctx.beginPath();let f1=true;for(const p of st){const x=mx(p.w);if(x<-4&&f1)continue;if(f1){ctx.moveTo(x,p.y);f1=false}else ctx.lineTo(x,p.y);}ctx.stroke();}
+  ctx.restore();
+  finishLine(mx(L));
+  pencil(px,py,state==="run"&&inkOn());
+  if(state==="count")note(String(Math.ceil(cd)));
+  if(state==="idle")note("READY","PRESS START OR CLICK THE GAME AREA");
+}
+function drawDone(){
+  bg(0);const pad=30,mx=w=>pad+w/L*(W-2*pad);
+  plot(mx,0,L,C.blue,4,.9);
+  ctx.save();ctx.strokeStyle=C.green;ctx.lineWidth=3;ctx.lineJoin="round";ctx.shadowColor=C.green;ctx.shadowBlur=8;
+  for(const st of strokes){ctx.beginPath();st.forEach((p,i)=>{const x=mx(p.w);if(i)ctx.lineTo(x,p.y);else ctx.moveTo(x,p.y);});ctx.stroke();}
+  ctx.restore();
+  ctx.fillStyle=C.red;for(let i=0;i<NB;i++)if(bins[i]==null)ctx.fillRect(mx(i*2),H-8,Math.max(1,(W-2*pad)/NB+.5),5);
+  ctx.fillStyle=C.dim;ctx.font="700 12px "+FONT;ctx.textAlign="left";ctx.fillText("START",pad,H-16);ctx.textAlign="right";ctx.fillText("FINISH",W-pad,H-16);
+}
+
+function pos(e){const r=cv.getBoundingClientRect();return{x:clamp(e.clientX-r.left,0,W),y:clamp(e.clientY-r.top,10,H-10)};}
+function move(p){if(state!=="run")return;ty=p.y;if(cfg.pencil==="mouse")tx=p.x;}
+cv.addEventListener("pointerdown",e=>{
+  if(state==="idle"||state==="done"){start();return;}
+  down=true;try{cv.setPointerCapture(e.pointerId);}catch(_){}move(pos(e));
+});
+cv.addEventListener("pointermove",e=>move(pos(e)));
+["pointerup","pointercancel"].forEach(n=>cv.addEventListener(n,()=>{down=false;}));
+window.addEventListener("blur",()=>{down=false;});
+cv.addEventListener("keydown",e=>{
+  if(e.code==="Space"){e.preventDefault();down=true;return;}
+  const k={ArrowUp:[0,-18],ArrowDown:[0,18],ArrowLeft:[-18,0],ArrowRight:[18,0]}[e.key];
+  if(k){e.preventDefault();if(state==="run"){ty=clamp(ty+k[1],10,H-10);if(cfg.pencil==="mouse")tx=clamp(tx+k[0],0,W);}}
+});
+cv.addEventListener("keyup",e=>{if(e.code==="Space")down=false;});
+$("go").addEventListener("click",start);
+$("spd").addEventListener("change",e=>{spd=+e.target.value;reset();});
+document.querySelectorAll(".tg").forEach(g=>g.addEventListener("click",e=>{
+  const b=e.target.closest("button");if(!b)return;
+  cfg[g.dataset.g]=b.dataset.v;g.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));reset();
+}));
+window.addEventListener("resize",resize);
+document.querySelectorAll("[data-go]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();const t=document.getElementById(a.dataset.go);if(t)t.scrollIntoView({behavior:"smooth"});}));
+{const h=location.hash.slice(1),t=h&&document.getElementById(h);if(t)t.scrollIntoView();}
+resize();
+</script>
+</body>
+</html>
