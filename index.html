@@ -245,7 +245,7 @@ function finish(){
     $("reflect").textContent="This function jumps, but a pencil can’t. To follow it you had to move smoothly and aim for the next step before it arrived.";
   }else{
     $("alabel").textContent="Never lift the pencil → one small correction at a time";
-    $("reflect").textContent="A continuous function can be drawn without lifting the pencil. Every point flows into the next, so a small, steady correction was always enough.";
+    $("reflect").textContent="A continuous function can be drawn without lifting the pencil. Every point flows into the next, so a small, steady correction was always enough. Holding the click is the continuous way to play: one unbroken stroke that you steer as the shape changes. Tapping point by point asks you to be exact at every single instant, which wears you out without ever looking at how the curve is moving, and that is rarely how a life plays out. An auxiliary example is how it changed my perspective in my dancing, singing and honestly in life. I started to abstract that there is a “perfect way” to do it: you just gotta trace it.";
   }
   $("result").hidden=false;$("go").textContent="Run again";$("hint").textContent="Change an option to compare";
   ["sin","cos","step"].forEach(k=>$("b-"+k).textContent=best[k]===null?"–":best[k].toFixed(1)+"%");
