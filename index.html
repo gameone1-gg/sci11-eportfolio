@@ -70,9 +70,9 @@ footer{margin-top:72px;color:var(--dim)}
 <div class="top"><span id="tl" hidden></span><nav aria-label="Sections"><a href="#game" data-go="game">The trace</a><a href="#module-1" data-go="module-1">M1</a><a href="#module-2" data-go="module-2">M2</a><a href="#module-3" data-go="module-3">M3</a><a href="#module-4" data-go="module-4">M4</a></nav></div>
 <main>
 <h1>There is a perfect way to do it. You just gotta trace it until you get it.</h1>
-<p class="lede">I think of a goal as a shape that is already drawn. My part is to trace it without lifting the pencil, and however far or fast I am, I can inch straight toward it or slow down for the fine details. This portfolio follows that idea, and the game below lets you try it before you read.</p>
+<p class="lede">I think of a goal as a shape that is already drawn. My part is to trace it without lifting the pencil (mirroring a "continous function" in math), and however far or fast I am, I can inch straight toward it or slow down for the fine details. This lets me have this anti-reductionist point of view where I am not constrained by discrete courses of action. This portfolio follows that idea, and the game below lets you try it before you read.</p>
 <span id="game"></span>
-<p class="lede">A function slides left and you write on it while it moves. Choose where the pencil lives and whether it writes all the time or only while you hold the click, because holding the click is the whole point.</p>
+<p class="lede">A function slides left and you write on it while it moves. Choose where the pencil lives and whether it writes all the time or only while you hold the click.</p>
 
 <section class="opts" aria-label="Game settings">
   <div class="grp"><small>Function</small><div class="tg" data-g="mode"><button data-v="sin" aria-pressed="true">sin(x)</button><button data-v="cos" aria-pressed="false">cos(x)</button><button data-v="step" aria-pressed="false">-_-_</button></div></div>
@@ -102,7 +102,7 @@ footer{margin-top:72px;color:var(--dim)}
 <p>The curve is split into thin columns. For each column, the height of your ink is compared with the function’s height there. A column with no ink counts as a full miss, so lifting the pencil costs you. Accuracy is 100% minus the average miss, measured against half the wave height; sitting still in the middle scores 0%. “Missed” is the share of columns with no ink or more than 15% of the wave height off. In -_-_ mode, a short grace window surrounds each jump.</p></details>
 
 <section class="mod" id="module-1"><small>Module 1</small><h2>The whole, not the parts</h2>
-<div class="trace"><small>Trace note</small><p>The way is already there, I just have to trace it without lifting the pencil. A discrete pencil can’t pinpoint a point exactly, a continuous one can at least cross it. The world may be discrete at the smallest scale, but practically it is continuous, so even a very specific task needs a continuous view or it breaks the moment things change.</p></div>
+<div class="trace"><small>Trace note</small><p>The way is already there, I just have to trace it without lifting the pencil. A discrete pencil can’t pinpoint a point exactly, a continuous one can at least cross it. The world may be discrete at the smallest scale, but practically it is continuous, so even a very specific task needs a continuous view or it breaks the moment things change. This correlates to the holistic perspective that the module undermines as a novel way on how science is taught. </p></div>
 <h3>Activity 1-1</h3>
 <p>Stories about “aswangs” are the first thing that comes to my mind. In the provinces they make the dark feel alive even though it is naturally quiet; a sound in the trees or an animal that “shouldn’t be there” turns an empty night into something that watches back. Others fit in too, like the bakunawa (the dragon said to swallow the moon, which people scared away with noise during eclipses) and the habit of saying “tabi-tabi po” when passing big trees or old places in case something unseen lives there.</p>
 <p><b>Do they describe the environment, the community, or the deities?</b> All three, and they are mixed together. The environment is the dark, forest, sea and the sky. The community shows up in the rules the stories carry, like staying in at night and looking after the weak or the sick. The deities and spirits (anito, diwata) are the ones who “own” those places.</p>
@@ -152,9 +152,27 @@ footer{margin-top:72px;color:var(--dim)}
 <p><b>Phases of mitosis:</b> In prophase the chromosomes condense and the spindle forms. In prometaphase the nuclear envelope breaks down and spindle fibers attach to the chromosomes. In metaphase the chromosomes line up in the middle. In anaphase the sister chromatids are pulled apart toward opposite poles. In telophase the nuclei re-form and the chromosomes loosen again, and cytokinesis finishes the job. The chromosome number is maintained because DNA is copied once and divided once, so each daughter cell gets one chromatid from every chromosome and ends up identical to the parent cell. It is the same as one point splitting into two points, and each of those holds the full original.</p>
 <p><b>Stages of meiosis:</b> Meiosis has one DNA replication but two divisions. In meiosis I, prophase I has homologous chromosomes pairing up and crossing over, metaphase I has the pairs lining up, anaphase I separates the homologs (not the sister chromatids), and telophase I leaves two cells. In meiosis II, the same stages (prophase II to telophase II) separate the sister chromatids, giving four haploid cells in total. Variation comes from crossing over and from independent assortment, which is how the pairs line up randomly in metaphase I.</p>
 <p><b>Why aren’t you an exact replica of your sibling?</b> Each gamete from the same parents carries a different mix because of crossing over and independent assortment, and which sperm meets which egg is also random. The same parents can produce a huge number of combinations, and I think that is how life “passes on” who we are without freezing it.</p>
-<p><b>Why does meiosis II behave like mitosis?</b> Because in both, the sister chromatids line up and then get pulled apart, with no DNA replication right before. The only difference is that the cells in meiosis II are already haploid.</p></section>
+<p><b>Why does meiosis II behave like mitosis?</b> Because in both, the sister chromatids line up and then get pulled apart, with no DNA replication right before. The only difference is that the cells in meiosis II are already haploid.</p><h3>Mitosis and meiosis as numbers</h3>
+<p>I think of mitosis and meiosis as math, where a logical framework of numbers chains into the correct organization of the cells. Every stage can be written as <b>a sets of b sets of c</b>, read as a × b × c. Here <b>a</b> is the number of cells, <b>b</b> is the number of chromosomes (1 = haploid, 23 chromosomes; 2 = diploid, 46 chromosomes) and <b>c</b> is the number of chromatids per chromosome.</p>
+<p>Start with one cell, two sets of chromosomes (diploid) and one chromatid each: <b>1 – 2 – 1</b>, which equals 2. The c is 1 and not 2 because nothing has duplicated yet. DNA replication (S phase) fixes that and doubles the total to 4, and the constant 4 is what has to be preserved for the rest of the division. So the question becomes: which variable do we change to make 4?</p>
+<p>It can’t be a, because a is the end goal (it’s what division produces). It also can’t be b, because four sets of 1 chromosome makes no sense. So the logical choice is c, which gives <b>1 – 2 – 2</b>. This is the step mitosis and meiosis share.</p>
+<p>From there they split. Mitosis duplicates the cell, so a goes up and the rest is divided to compensate: <b>2 – 2 – 1</b>. It’s still 4, and each cell is still diploid. Meiosis can’t do that, because 2 – 2 – 1 would just be mitosis again. Instead of keeping b at 2, it decreases b to compensate: <b>2 – 1 – 2</b>. This is meiosis I, where the cell count doubles and the chromosome count halves (46 to 23) while the chromatids stay paired. Meiosis II then separates those chromatids and reaches the end goal, <b>4 – 1 – 1</b>.</p>
 
-<footer>E-PORTFOLIO / There is a perfect way to do it. You just gotta trace it until you get it. Design Inspiration: https://github.com/gameone1-gg/cwts1-pagkilala  <a href="#game" data-go="game" style="color:var(--green)">Back to the game</a></footer>
+<div class="wrap"><table class="tbl"><thead><tr><th>Stage</th><th>Mitosis (a – b – c)</th><th>Meiosis (a – b – c)</th></tr></thead><tbody>
+<tr><td>Start</td><td>1 – 2 – 1</td><td>1 – 2 – 1</td></tr>
+<tr><td>After S phase</td><td>1 – 2 – 2</td><td>1 – 2 – 2</td></tr>
+<tr><td>First division</td><td>2 – 2 – 1</td><td>2 – 1 – 2</td></tr>
+<tr><td>Second division</td><td>none</td><td>4 – 1 – 1</td></tr></tbody></table></div>
+
+<p>The verification is that the product is always 4, and for meiosis the middle term has to end at 1. Four cells that are each haploid is exactly what gametes need to be, and nature has had millions of years of evolution to optimize that check.</p>
+
+<h3>Model</h3>
+<div class="model"><p><b>COMING SOON</b></p></div>
+
+<div class="trace"><small>Side note</small><p>I think of logic as a rationalized subset of the P vs NP idea (assuming P is not equal to NP). Some things are easy to find, and those are naturally easy to check. But other things are easy to check and hard to find. Meiosis feels like that to me: the numbers are easy to verify, yet why nature arrived at this exact organization is hard to find. Sometimes you ask “why” and don’t really understand the answer but KNOW it’s important. Maybe it’s easy to check but hard to find, so I leave it as is.</p></div>
+</section>
+
+<footer>E-PORTFOLIO / There is a perfect way to do it. You just gotta trace it until you get it. Design Inspiration: https://gameone1-gg.github.io/cwts1-pagkilala/ Side note: The MyPortal interface was laggy while I was trying to submit, so I could only comply a day after the submission date.  <a href="#game" data-go="game" style="color:var(--green)">Back to the game</a></footer>
 </main>
 
 <script>
